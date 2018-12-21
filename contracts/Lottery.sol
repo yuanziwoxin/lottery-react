@@ -2,9 +2,9 @@ pragma solidity ^0.4.17;
 
 contract Lottery{
 
-    address public manager;
-    address[] public players;
-    address public winner;
+    address public manager;//管理员的地址
+    address[] public players;//投注者的地址
+    address public winner;//中奖者的地址
 
     function Lottery() public{
         manager =  msg.sender;
@@ -35,6 +35,7 @@ contract Lottery{
     }
 
     //这个函数的返回值是当前交易的id
+    //（注意：这里send方法不能有返回值，即使你这里设置返回值（如returns(address)）,返回也不是中奖者的地址，而是该笔交易的哈希值）
     function  pickWinner() public onlyManagerCanCall {
         uint index = random() % players.length;
         winner =  players[index];
